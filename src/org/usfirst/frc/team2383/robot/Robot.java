@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
-import org.usfirst.frc.team2383.robot.auto.TestDrive;
+import org.usfirst.frc.team2383.robot.auto.TwoBallAuto;
 import org.usfirst.frc.team2383.robot.commands.FlapOpen;
 import org.usfirst.frc.team2383.robot.commands.ShiftLow;
 import org.usfirst.frc.team2383.robot.commands.ShootFlap;
@@ -41,8 +41,6 @@ public class Robot extends IterativeRobot {
 	public static Flap flap = new Flap();
 	public static Shifter shifter = new Shifter();
 	public static Brake brake = new Brake();
-	//public static ShooterHood shooterHood = new ShooterHood();
-	//public static Vision vision = new Vision();
 	public static OI oi = new OI();
 	public static final Robot Robot = new Robot();
 	
@@ -59,7 +57,7 @@ public class Robot extends IterativeRobot {
 		//autoChooser.addDefault("No auto", new TestCommand());
 		
 		//SmartDashboard.putData("Auto Chooser", autoChooser);
-    	autoCommand = new TestDrive();
+    	autoCommand = new TwoBallAuto();
     }
 	
 	/**
@@ -70,6 +68,7 @@ public class Robot extends IterativeRobot {
     public void disabledInit(){
     	drivetrain.tankDrive(0.0, 0.0);
     	shooter.ShooterStop();
+    	Robot.brake.brake();
     }
 	
 	public void disabledPeriodic() {
@@ -88,7 +87,7 @@ public class Robot extends IterativeRobot {
 	}
 	
     public void teleopInit() {
-    	//if (autoCommand != null) autoCommand.cancel();
+    	Scheduler.getInstance().removeAll();
     	shooter.ShooterStop();
 		feeder.feederStop();
     }
